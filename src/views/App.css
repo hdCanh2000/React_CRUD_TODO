@@ -23,9 +23,58 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  padding: 20px;
+}
+
+.btn {
+  padding-bottom: 20px;
+}
 
 .App-link {
   color: #61dafb;
+}
+
+.note-btn {
+  color: blue;
+  font-size: 12px;
+  font-style: italic;
+  float: left
+}
+
+.show-error {
+  padding: 3px 0 5px;
+  color: red;
+  font-size: 12px;
+  font-style: italic;
+  float: left
+}
+
+.mail,
+.code-diff,
+.code-error {
+  display: none;
+}
+
+.padding {
+  padding: 3px 0;
+}
+
+.text-padding {
+  padding-left: 30px
+}
+
+.btn-padding {
+  padding-right: 10px;
+}
+
+.search {
+  float: right;
 }
 
 @keyframes App-logo-spin {
