@@ -1,47 +1,12 @@
 import React from "react";
 // import { DataGrid } from '@mui/x-data-grid';
-import { Button, Dialog, Box } from "@mui/material";
+import { Button, Dialog, Box, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-
-const ErrorOutput = (props) => {
-  let name = props.name;
-  let inputValue = props.case;
-  // let Rows = props.rows.code;
-  // let submit = props.submit;
-  if (name === "code") {
-    if (!inputValue.match(/^[A-Z0-9]+$/)) {
-      return (
-        <span className="show-error">
-          Mã sinh viên yêu cầu ký tự chữ cái in hoa và số
-        </span>
-      );
-    } else if (inputValue.length < 6 || inputValue.length > 15) {
-      return (
-        <span className="show-error">
-          Mã sinh viên không hợp lệ (Yêu cầu mã sinh viên trên 6-15 ký tự và số)
-        </span>
-      );
-      // } else if (inputValue === Rows) {
-      //   return (
-      //     <span className="show-error">
-      //       Mã sinh viên đã tồn tại.
-      //     </span>
-      //   );
-    }
-    return <span></span>;
-  }
-  // if (code === "mail") {
-  //   if (!inputValue.match(/^[@]+$/) && inputValue.length > 0) {
-  //     return <span className="show-error">Numbers only</span>;
-  //   } else if (submit && inputValue.length === 0) {
-  //     return <span className="show-error">Required</span>;
-  //   }
-  //   return <span></span>;
-  // }
-};
+import moment from "moment";
+import ErrorOutput from "./ErrorOutput";
 
 class DialogTodo extends React.Component {
   constructor(props) {
@@ -56,16 +21,10 @@ class DialogTodo extends React.Component {
         address: "",
         school: "",
       },
-      code: this.props.rowsCode,
-      fullName: this.props.rowsFullName,
-      age: this.props.rowsAge,
-      dob: this.props.rowsDob,
-      mail: this.props.rowsMail,
-      address: this.props.rowsAddress,
-      school: this.props.rowsSchool,
-      // submit: false,
+      propData: {
+        dataRows: this.props.rows.map((item) => item),
+      },
       open: true,
-      hidenFormDialog: true,
     };
   }
 
@@ -73,12 +32,6 @@ class DialogTodo extends React.Component {
     this.setState = {
       open: false,
     };
-  };
-
-  handleHideDialog = () => {
-    this.setState({
-      hidenFormDialog: false,
-    });
   };
 
   handleInput = (e) => {
@@ -94,13 +47,13 @@ class DialogTodo extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.submitData(this.state.formData);
-    console.log(">>test add data to dialog", this.state.formData);
   };
 
   handleDisabled = () => {
     let checkData = this.state.formData;
-    let currentData = this.props.code;
+    let currentData = this.props.rows.map((row) => row.code);
     if (
+      // !currentData.includes(checkData.code) &&
       checkData.code.match(/^[A-Z0-9]+$/) &&
       checkData.code.length > 5 &&
       checkData.code.length < 16 &&
@@ -121,7 +74,6 @@ class DialogTodo extends React.Component {
       formData: {
         ...this.state.formData,
         ...this.props.currentData,
-        ...this.props.rows,
       },
     });
   }
@@ -129,9 +81,14 @@ class DialogTodo extends React.Component {
   componentDidUpdate() {}
 
   render() {
-    // formData = {}
-    const { closeDialog, type, rows } = this.props;
-    let { formData } = this.state;
+    const {
+      closeDialog,
+      type,
+      // formData = {},
+    } = this.props;
+
+    let { formData, propData } = this.state;
+
     return (
       <div>
         <Dialog open={true} onClose={closeDialog}>
@@ -156,14 +113,16 @@ class DialogTodo extends React.Component {
                     name="code"
                     label="Mã Sinh Viên "
                     fullWidth
-                    defaultValue={this.state.rowsCode}
                     value={this.state.formData.code}
                     onChange={(e) => this.handleInput(e)}
-                  />
-                  <ErrorOutput
-                    case={this.state.formData.code}
-                    name={"code"}
-                    // submit={this.state.submit}
+                    helperText={
+                      <ErrorOutput
+                        case={this.state.formData.code}
+                        name={"code"}
+                        dataRows={propData.dataRows}
+                        // submit={this.state.submit}
+                      />
+                    }
                   />
                 </div>
                 <div className="padding">
@@ -206,11 +165,11 @@ class DialogTodo extends React.Component {
                       id="dob"
                       name="dob"
                       label="Ngày Sinh "
-                      type="text"
+                      type="date"
                       fullWidth
                       float="right"
                       required
-                      value={formData.dob}
+                      defaultValue={formData.dob}
                       onChange={(e) => this.handleInput(e)}
                     />
                   </>

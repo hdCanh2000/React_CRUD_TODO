@@ -48,7 +48,7 @@
 }
 
 .show-error {
-  padding: 3px 0 5px;
+  /* padding: 3px 0 5px; */
   color: red;
   font-size: 12px;
   font-style: italic;

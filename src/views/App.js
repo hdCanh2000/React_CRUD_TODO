@@ -11,14 +11,6 @@ import Nav from './Nav/Nav'
 import HomePage from './home/HomePage';
 import TodoList from './todos/Todos';
 import FunctionTodo from './todoFunction/FunctionTodos';
-// import "./src/styles/global.css";
-
-
-// toast.configure({
-//   autoClose: 1500,
-//   limit: 2,
-// });
-
 
 function App() {
   return (
@@ -28,7 +20,7 @@ function App() {
         <div className="header">
           <Routes>
             <Route path="/" element={<HomePage />}/>
-            <Route path="class" element={<TodoList />} />
+            <Route path="classs" element={<TodoList />} />
             <Route path="function" element={<FunctionTodo />} />
           </Routes>
         </div>
