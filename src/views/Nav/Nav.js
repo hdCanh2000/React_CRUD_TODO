@@ -16,8 +16,8 @@ function Nav () {
                 <NavLink to="/function" activeclassname="active">
                     Todo Function 
                 </NavLink>
-                <NavLink to="/contact" activeclassname="active">
-                    Contact
+                <NavLink to="/redux" activeclassname="active">
+                    Redux
                 </NavLink>
                 <NavLink to="/about" activeclassname="active">
                     About

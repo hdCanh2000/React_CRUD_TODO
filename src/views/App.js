@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Nav from './Nav/Nav'
 import HomePage from './home/HomePage';
-import Contact from './home/Contact'
+import Redux from './home/Redux'
 import About from './home/About'
 import TodoList from './todos/Todos';
 import FunctionTodo from './todoFunction/FunctionTodos';
@@ -27,7 +27,7 @@ function App() {
             <Route path="/class" element={<TodoList />} />
             <Route path="/function" element={<FunctionTodo />} />
             <Route path="/about" element={<About />}/>
-            <Route path="/contact" element={<Contact />}/>
+            <Route path="/redux" element={<Redux />}/>
           </Routes>
         </div>
         <ToastContainer />
