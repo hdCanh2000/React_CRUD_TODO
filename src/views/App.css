@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
 .App-logo {
@@ -29,11 +31,20 @@
   align-items: center;
   justify-content: center;
   color: white;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .btn {
   padding-bottom: 20px;
+  min-width: 1000px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.padding {
+  /* margin-left: 96px; */
+  /* margin-top: 30px; */
 }
 
 .App-link {
@@ -75,6 +86,11 @@
 
 .search {
   float: right;
+}
+
+.dob {
+  padding-top: 8px;
+  min-width: 250px;
 }
 
 @keyframes App-logo-spin {

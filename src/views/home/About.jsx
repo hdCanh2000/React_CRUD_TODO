@@ -5,8 +5,8 @@ import '../App.css';
 function App() {
   return (
     <div className="App">
-      <img src={logo} className="App-logo App-logo-spin" alt="logo" />
-      <h2 style={{color:"black"}}>React LifeTek</h2>
+      <img src="https://picsum.photos/1000/600/?blur" className=" App-logo-spin" alt="logo" />
+      <h2 style={{color:"black"}}>React About</h2>
     </div>
   );
 }

@@ -9,24 +9,30 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Nav from './Nav/Nav'
 import HomePage from './home/HomePage';
+import Contact from './home/Contact'
+import About from './home/About'
 import TodoList from './todos/Todos';
 import FunctionTodo from './todoFunction/FunctionTodos';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Nav /> 
+    <div className="App">
+      <Router>
+        <div>
+          <Nav />  
+        </div> 
         <div className="header">
           <Routes>
-            <Route path="/" element={<HomePage />}/>
-            <Route path="classs" element={<TodoList />} />
-            <Route path="function" element={<FunctionTodo />} />
+            <Route exact path="/" element={<HomePage />}/>
+            <Route path="/class" element={<TodoList />} />
+            <Route path="/function" element={<FunctionTodo />} />
+            <Route path="/about" element={<About />}/>
+            <Route path="/contact" element={<Contact />}/>
           </Routes>
         </div>
         <ToastContainer />
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 }
 

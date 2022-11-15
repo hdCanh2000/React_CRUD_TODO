@@ -1,11 +1,13 @@
 import React from "react";
-// import { DataGrid } from '@mui/x-data-grid';
-import { Button, Dialog, Box, Stack } from "@mui/material";
+import { Button, Dialog, Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import moment from "moment";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ErrorOutput from "./ErrorOutput";
 
 class DialogTodo extends React.Component {
@@ -13,9 +15,9 @@ class DialogTodo extends React.Component {
     super(props);
     this.state = {
       formData: {
+        id: "",
         code: "",
         fullName: "",
-        age: "",
         dob: "",
         mail: "",
         address: "",
@@ -23,7 +25,9 @@ class DialogTodo extends React.Component {
       },
       propData: {
         dataRows: this.props.rows.map((item) => item),
+        IdRows: this.props.rows.map((item) => item.id),
       },
+      type: this.props.type,
       open: true,
     };
   }
@@ -35,7 +39,8 @@ class DialogTodo extends React.Component {
   };
 
   handleInput = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    const { value } = e.target;
     this.setState({
       formData: {
         ...this.state.formData,
@@ -49,46 +54,82 @@ class DialogTodo extends React.Component {
     this.props.submitData(this.state.formData);
   };
 
-  handleDisabled = () => {
+  handleDisabledSave = () => {
+    // this.setState({ formData: { id: this.props.rows.map((item) => item.id) } });
     let checkData = this.state.formData;
     let currentData = this.props.rows.map((row) => row.code);
+    let currentID = this.props.rows.map((row) => row.id);
+    let id = currentID.filter((item) => item === checkData.id);
+    let inputData = moment(checkData.dob).isValid();
+    let inputYear = moment(checkData.dob).year();
+    let nowYear = moment().year();
+
     if (
-      // !currentData.includes(checkData.code) &&
-      checkData.code.match(/^[A-Z0-9]+$/) &&
-      checkData.code.length > 5 &&
-      checkData.code.length < 16 &&
-      checkData.fullName &&
-      checkData.dob &&
-      checkData.school &&
-      checkData.address &&
-      checkData.mail
+      !checkData.fullName ||
+      !checkData.dob ||
+      !checkData.school ||
+      !checkData.address ||
+      !checkData.mail
     ) {
-      return false;
-    } else {
       return true;
+    }
+
+    if (
+      !checkData.code.match(/^[A-Z0-9]+$/) ||
+      checkData.code.length < 6 ||
+      checkData.code.length > 15
+    ) {
+      return true;
+    }
+
+    if (this.state.type === "add") {
+      if (
+        currentData.find((item) => item === checkData.code) ||
+        inputData === false ||
+        inputYear === "" ||
+        inputYear > nowYear ||
+        nowYear - inputYear < 18 ||
+        nowYear - inputYear > 122
+      ) {
+        return true;
+      }
+      return false;
+    }
+
+    if (this.state.type === "update") {
+      if (checkData.id === id.map((item) => item)) {
+        if (currentData.find((item) => item === checkData.code)) {
+          return true;
+        }
+        return true;
+      }
+      if (
+        inputData === false ||
+        inputYear === "" ||
+        inputYear > nowYear ||
+        nowYear - inputYear < 18 ||
+        nowYear - inputYear > 122
+      ) {
+        return true;
+      }
+      return false;
     }
   };
 
   componentDidMount() {
+    const { currentData = {} } = this.props;
+    const { row = {} } = currentData;
     this.setState({
       formData: {
         ...this.state.formData,
-        ...this.props.currentData,
+        ...row,
       },
     });
   }
 
-  componentDidUpdate() {}
-
   render() {
-    const {
-      closeDialog,
-      type,
-      // formData = {},
-    } = this.props;
-
-    let { formData, propData } = this.state;
-
+    const { closeDialog, type } = this.props;
+    let { formData } = this.state;
     return (
       <div>
         <Dialog open={true} onClose={closeDialog}>
@@ -97,13 +138,9 @@ class DialogTodo extends React.Component {
               {type === "add" ? "THÊM SINH VIÊN" : "SỬA THÔNG TIN SINH VIÊN"}
             </span>
           </DialogTitle>
-          <div style={{ width: "600px" }}>
+          <div style={{ minWidth: "600px" }}>
             <DialogContent>
-              <form
-                onSubmit={(e) => {
-                  this.handleSubmit(e);
-                }}
-              >
+              <form onSubmit={(e) => this.handleSubmit(e)}>
                 <div>
                   <TextField
                     autoFocus
@@ -119,8 +156,9 @@ class DialogTodo extends React.Component {
                       <ErrorOutput
                         case={this.state.formData.code}
                         name={"code"}
-                        dataRows={propData.dataRows}
-                        // submit={this.state.submit}
+                        caseId={this.state.formData.id}
+                        type={this.state.type}
+                        dataRows={this.props.rows.map((item) => item)}
                       />
                     }
                   />
@@ -145,36 +183,6 @@ class DialogTodo extends React.Component {
                     justifyContent: "space-between",
                   }}
                 >
-                  <>
-                    <TextField
-                      margin="dense"
-                      id="age"
-                      name="age"
-                      label="Tuổi "
-                      type="number"
-                      value={formData.age}
-                      required
-                      onChange={(e) => this.handleInput(e)}
-                      fullWidth
-                    />
-                  </>
-                  <div style={{ padding: "5px" }}></div>
-                  <>
-                    <TextField
-                      margin="dense"
-                      id="dob"
-                      name="dob"
-                      label="Ngày Sinh "
-                      type="date"
-                      fullWidth
-                      float="right"
-                      required
-                      defaultValue={formData.dob}
-                      onChange={(e) => this.handleInput(e)}
-                    />
-                  </>
-                </Box>
-                <div className="padding">
                   <TextField
                     margin="dense"
                     id="mail"
@@ -186,13 +194,54 @@ class DialogTodo extends React.Component {
                     required
                     onChange={(e) => this.handleInput(e)}
                   />
-                  {/* <ErrorOutput
-                    case={this.state.formData.mail}
-                    name={"mail"}
-                    submit={this.state.submit}
-                  /> */}
-                </div>
-                <div>
+
+                  <div style={{ padding: "5px" }}></div>
+
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      inputFormat={"YYYY-MM-DD"}
+                      value={formData.dob}
+                      onChange={(e) =>
+                        this.handleInput({
+                          target: {
+                            value: moment(e).format("YYYY-MM-DD"),
+                            name: "dob",
+                          },
+                        })
+                      }
+                      label="Ngày Sinh "
+                      name="dob"
+                      id="dob"
+                      autoOk={true}
+                      openTo="year"
+                      minDate={moment("1900-01-01")}
+                      maxDate={moment().subtract(17, 'years')}
+                      renderInput={(params) => (
+                        <TextField
+                          format={"YYYY-MM-DD"}
+                          margin="dense"
+                          id="dob"
+                          name="dob"
+                          type="text"
+                          float="right"
+                          fullWidth
+                          required
+                          helperText={
+                            <ErrorOutput
+                              caseDob={formData.dob}
+                              name={"dob"}
+                              dateInput={moment(formData.dob).isValid()}
+                              type={this.state.type}
+                              dataRows={this.props.rows.map((item) => item)}
+                            />
+                          }
+                          {...params}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Box>
+                <div className="padding">
                   <TextField
                     margin="dense"
                     id="address"
@@ -231,7 +280,7 @@ class DialogTodo extends React.Component {
                     variant="contained"
                     color="primary"
                     type="submit"
-                    disabled={this.handleDisabled()}
+                    disabled={this.handleDisabledSave()}
                   >
                     Lưu
                   </Button>
