@@ -1,4 +1,4 @@
-Live demo: https://mlb-nine.vercel.app/
+Live demo: https://react-crud-todo.vercel.app/
 
 # In the project directory, you can run:
 
