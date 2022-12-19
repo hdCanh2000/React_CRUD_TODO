@@ -1,0 +1,10 @@
+
+ul > li {
+    
+    transition: all 0.15s ease-in-out 0s;
+    cursor: pointer;
+}
+
+ul > li.selectedId {
+    color: green;
+}

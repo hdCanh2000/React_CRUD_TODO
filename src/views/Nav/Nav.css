@@ -10,7 +10,7 @@ body {
     z-index: 1;
   }
   
-  .topnav a {
+  div a {
     float: left;
     color: #f2f2f2;
     text-align: center;
@@ -19,12 +19,12 @@ body {
     font-size: 17px;
   }
   
-  .topnav a:hover {
+  div a:hover {
     background-color: #ddd;
     color: black;
   }
   
-  .topnav a.active {
+  div a.active {
     background-color: #04AA6D;
     color: white;
   }

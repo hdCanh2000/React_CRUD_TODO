@@ -8,6 +8,7 @@ let data = [
       school: "ĐH Hoa Lư",
       mail: "hdc@gmail.com",
       dob: "2000-03-31",
+      avt: "https://picsum.photos/150/150",
     },
     {
       id: 21,
@@ -16,6 +17,7 @@ let data = [
       address: "Hà Nội",
       school: "ĐHQG",
       mail: "hdc@gmail.com",
+      avt: "https://picsum.photos/150/150",
       dob: "2000-03-31",
     },
     {
@@ -26,6 +28,7 @@ let data = [
       school: "ĐH Thái Nguyên",
       mail: "hdc@gmail.com",
       dob: "2000-03-31",
+      avt: "https://picsum.photos/150/150",
     },
     {
       id: 41,
@@ -35,6 +38,7 @@ let data = [
       school: "ĐHQG",
       mail: "hdc@gmail.com",
       dob: "2000-03-31",
+      avt: "https://picsum.photos/150/150",
     },
     {
       id: 51,
@@ -44,6 +48,7 @@ let data = [
       school: "ĐH Thái Nguyên",
       mail: "hdc@gmail.com",
       dob: "2000-03-31",
+      avt: "https://picsum.photos/150/150",
     },
     {
       id: 313,
@@ -53,6 +58,7 @@ let data = [
       school: "ĐH Thái Nguyên",
       mail: "hdc@gmail.com",
       dob: "2000-03-31",
+      avt: "https://picsum.photos/150/150",
     },
     {
       id: 4,
@@ -62,6 +68,7 @@ let data = [
       school: "ĐHQG",
       mail: "hdc@gmail.com",
       dob: "2000-03-31",
+      avt: "https://picsum.photos/150/150",
     },
     {
       id: 5,
@@ -71,6 +78,7 @@ let data = [
       school: "ĐH Thái Nguyên",
       mail: "hdc@gmail.com",
       dob: "2000-03-31",
+      avt: "https://picsum.photos/150/150",
     },
 ]
 export default data;

@@ -10,18 +10,18 @@ function Nav () {
                 <NavLink to="/" activeclassname="active">
                     Home
                 </NavLink>
-                <NavLink to="/class" activeclassname="active">
-                    Todo Class
-                </NavLink>
                 <NavLink to="/function" activeclassname="active">
                     Todo Function 
                 </NavLink>
+                <NavLink to="/reduxtodo" activeclassname="active">
+                    Todo Redux Core 
+                </NavLink>
                 <NavLink to="/redux" activeclassname="active">
-                    Redux
+                    Redux Saga
                 </NavLink>
-                <NavLink to="/about" activeclassname="active">
+                {/* <NavLink to="/about" activeclassname="active">
                     About
-                </NavLink>
+                </NavLink> */}
         </div>
     )
 }
